@@ -1,0 +1,31 @@
+//this code will change the RGB lights using a potentiometer
+//the code works with the RGB as an output and the Potentiometer as an input
+int redPin = 9;      // Pin connected to the red LED
+int greenPin = 10;   // Pin connected to the green LED
+int bluePin = 11;    // Pin connected to the blue LED
+int potPin = A0;     // Pin connected to the potentiometer
+void setup() {
+  pinMode(redPin, OUTPUT);       // Set the red pin as output
+  pinMode(greenPin, OUTPUT);     // Set the green pin as output
+  pinMode(bluePin, OUTPUT);      // Set the blue pin as output
+}
+void loop() {
+  int potValue = analogRead(potPin); // Read the potentiometer value
+  
+  // Map the potentiometer value to RGB values
+  int redValue = 0;
+  int greenValue = 0;
+  int blueValue = 0;
+  if (potValue < 341) {
+    redValue = map(potValue, 0, 340, 255, 0); // Red decreases as pot increases
+  } else if (potValue < 682) {
+    greenValue = map(potValue, 341, 681, 0, 255); // Green increases
+  } else {
+    blueValue = map(potValue, 682, 1023, 0, 255); // Blue increases
+  }
+  // Set the RGB LED color
+  analogWrite(redPin, redValue);
+  analogWrite(greenPin, greenValue);
+  analogWrite(bluePin, blueValue);
+  delay(10); // Small delay for stability
+}
