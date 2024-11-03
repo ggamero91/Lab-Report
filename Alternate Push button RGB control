@@ -1,0 +1,28 @@
+// this code makes the RGB white light turn off when the PB is pressed
+// the code is for the RGB to be outputs nad for the pb to be an input
+int buttonPin = 2;   // Pin connected to the push button
+int redPin = 9;      // Pin connected to the red LED
+int greenPin = 10;   // Pin connected to the green LED
+int bluePin = 11;    // Pin connected to the blue LED
+void setup() {
+  Serial.begin(9600);            // Start serial communication
+  pinMode(buttonPin, INPUT_PULLUP); // Set the button pin as input with internal pull-up
+  pinMode(redPin, OUTPUT);       // Set the red pin as output
+  pinMode(greenPin, OUTPUT);     // Set the green pin as output
+  pinMode(bluePin, OUTPUT);      // Set the blue pin as output
+}
+void loop() {
+  int buttonState = digitalRead(buttonPin); // Read the button state
+  if (buttonState == LOW) { // Button is pressed
+    // Turn off RGB LED
+    digitalWrite(redPin, LOW);
+    digitalWrite(greenPin, LOW);
+    digitalWrite(bluePin, LOW);
+  } else { // Button is not pressed
+    // Set RGB LED to white (all colors on)
+    digitalWrite(redPin, HIGH);
+    digitalWrite(greenPin, HIGH);
+    digitalWrite(bluePin, HIGH);
+  }
+  delay(100); // Small delay for stability
+}
