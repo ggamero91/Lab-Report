@@ -1,0 +1,12 @@
+// code to read the value on the serial monitor
+//using PULLUP
+int pB = 3; //pin 3 connected to the pushbutton
+void setup() {
+Serial.begin(9600);
+pinMode(pB , INPUT_PULLUP); // set pin 3 as input as a pull up
+}
+// when pressing the button value of 0 or 1 will be displayed in the monitor
+void loop(){
+int buttonState = digitalRead (pB); // read the value of the button 
+Serial.println(buttonState);
+}
