@@ -1,0 +1,42 @@
+// this code will make the RGB LED go from red to green to blue light with a smooth transition
+//the code works with analog outputs
+// Pin assignments for RGB LED
+const int redPin = 9; 
+const int greenPin = 10;
+const int bluePin = 11;
+
+// function for color change of the RGB LED
+void setColor(int red, int green, int blue) {
+  analogWrite(redPin, red);
+  analogWrite(greenPin, green);
+  analogWrite(bluePin, blue);
+}
+void setup() {
+  // pin selection for each color, setting the pins as output
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+}
+void loop() {
+  // Red to Green
+  for (int green = 0; green <= 255; green++) {
+    setColor(255, green, 0); // Transition from red to green
+    delay(10); // delay before going to the next color
+  }
+  
+  // Green to Blue
+  for (int blue = 0; blue <= 255; blue++) {
+    setColor(0, 255, blue); // Transition from green to blue
+    delay(10); // delay before going to the next color
+  }
+  
+  // Blue to Red
+  for (int red = 0; red <= 255; red++) {
+    setColor(red, 0, 255); // Transition from blue to red
+    delay(10); // delay before going to the next color
+  }
+  
+  // Reset to off
+  setColor(0, 0, 0);
+  delay(10); // pause before starting the loop again
+}
