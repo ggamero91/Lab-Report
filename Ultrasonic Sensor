@@ -1,0 +1,39 @@
+//this program is to use the ultrasonic sensor
+//the sensor acts as a digital output. it transmits and receives sound waves to detect distance
+
+const int trigPin = 9;   // Pin connected to the Trig pin of the HC-SR04
+const int echoPin = 8;  // Pin connected to the Echo pin of the HC-SR04
+// Variables to store the duration and distance
+long duration;
+int distance;
+// Timing variables
+unsigned long lastTriggerTime = 0;   // Last time the trigger was activated
+unsigned long triggerInterval = 60;   // Interval between triggers (in milliseconds)
+void setup() {
+  // Start the serial communication
+  Serial.begin(9600);
+  // Set the trigPin as an output and echoPin as an input
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  // Ensure trigPin is LOW to start with
+  digitalWrite(trigPin, LOW);
+}
+void loop() {
+  // Check if it's time to trigger the ultrasonic sensor
+  if (millis() - lastTriggerTime >= triggerInterval) {
+    // Update the last trigger time
+    lastTriggerTime = millis();
+    // Trigger the sensor to send out a pulse (HIGH for 10 microseconds)
+    digitalWrite(trigPin, HIGH);  
+    delayMicroseconds(10);  // 10 microsecond pulse to trigger the ultrasonic sensor
+    digitalWrite(trigPin, LOW);
+    // Measure the time it takes for the echo to return
+    duration = pulseIn(echoPin, HIGH);  // measure the pulse width
+    // Calculate the distance based on the time taken for the pulse to return
+    distance = duration * 0.0343 / 2;  // Divide by 2 because the pulse travels to the object and back
+    // Print the distance in centimeters to the Serial Monitor
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.println(" cm");
+  }
+}
