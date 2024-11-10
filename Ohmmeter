@@ -1,0 +1,12 @@
+//code to create an omhmeter 
+void setup() {
+  Serial.begin(9600);
+}
+void loop() {
+  int analog = analogRead(A0); //pin connecte to A0
+  float voltage = analog * (5.0/1023.0); //calculate the voltage. volts devided by bit value
+  float current = (5.0 - voltage) / 1000.0; //calculate current. max voltage of 5 minus voltage calculated from previous line
+  float resistance = voltage / current; // calculate resistance.
+  Serial.println(resistance); // print resistance value
+ delay(500); // wait half a second in between reads
+}
