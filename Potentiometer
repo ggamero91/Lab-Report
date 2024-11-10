@@ -1,0 +1,15 @@
+//code to display the value controlled by a potentiometer
+//the potentiometer is programmed as an analog
+
+void setup() {
+  // Start the serial communication at 9600 baud:
+  Serial.begin(9600);
+}
+void loop() {
+  // Read the potentiometer value from analog pin A0:
+  int potentiometerValue = analogRead(A0);
+  // Print the raw potentiometer value (0 to 1023) to the serial monitor:
+  Serial.println(potentiometerValue);
+  // Delay before the next reading:
+  delay(100);  // Adjust the delay as needed (in milliseconds)
+}
