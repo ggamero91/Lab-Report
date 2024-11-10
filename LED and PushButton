@@ -1,0 +1,42 @@
+//this code makes an LED blink every 5 seconds and independently when a PB is pressed the monitor will display a value 
+//in this code there is a mixture of inputs and outputs. the LED is an output. The pb is an input
+// Pin numbers where the LED and button are connected
+
+
+const int ledPin = 13;   // LED connected to pin 13
+const int buttonPin = 2; // Button connected to pin 2
+unsigned long previousMillis = 0;  // Time tracking for LED blinking
+const unsigned long interval = 5000; // LED blink every 5 seconds
+int ledState = LOW;                 // To store the LED state (on or off)
+unsigned long debounceDelay = 50;   // Time to debounce the button
+void setup() {
+  pinMode(ledPin, OUTPUT);        // Set the LED pin as an output
+  pinMode(buttonPin, INPUT_PULLUP); // Set the button pin as an input with internal pull-up resistor
+  Serial.begin(9600);             // Start serial communication (for Serial Monitor output)
+}
+void loop() {
+  unsigned long currentMillis = millis(); // Get current time
+  
+  // Toggle LED state every 5 seconds
+  if (currentMillis - previousMillis >= interval) {
+    previousMillis = currentMillis;  // Save the current time
+    ledState = !ledState;            // Toggle the LED state
+    digitalWrite(ledPin, ledState);  // Apply the new state to the LED
+  }
+  // Read the button state and handle debounce
+  static int lastButtonState = HIGH; // Start assuming button is not pressed
+  static unsigned long lastButtonPress = 0; // Store last button press time
+  int currentButtonState = digitalRead(buttonPin);  // Read the button pin state
+  // Check if the button state has changed and debounce it
+  if (currentButtonState != lastButtonState) {
+    lastButtonPress = currentMillis; // Record the time of the button press
+  }
+  // If enough time has passed since the last button press, consider the state stable
+  if (currentMillis - lastButtonPress > debounceDelay) {
+    if (currentButtonState == LOW) {  // Button is pressed (active low)
+      Serial.println(1);  // Print "1" to the Serial Monitor
+    } else {
+      Serial.println(0);  // Print "0" when the button is not pressed
+    }
+  }
+}
