@@ -1,0 +1,23 @@
+//This code is to make the servo motor move according to the amount of light that the LDR receives. The motor will move between angle 0 to 180
+// the code is for analog input for the LDR and analog output for the servo motor
+#include <Servo.h>
+
+Servo myServo;
+
+void setup() {
+ myServo.attach(9); // servo motor connected to pin 9
+ Serial.begin(9600); // start serial communication
+
+}
+
+void loop() {
+ 
+int value = analogRead(A0); // LDR connected to pin 0A
+ Serial.println(value); // print the value given by LDR
+int position = map (value, 70, 715, 0, 180); // the min and max values given by the LDR at angle 0 to 180
+ myServo.write(position); //moves the servo motor to new position
+
+
+ delay(150); // delay between position changes for stability 
+
+}
