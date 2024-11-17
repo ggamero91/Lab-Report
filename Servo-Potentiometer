@@ -1,0 +1,28 @@
+//This code is to make the servo motor move according to the amount of voltage that is controlled by the potentiometer
+// the code is for analog input for the potentiometer and analog output for the servo motor
+#include <Servo.h>
+
+Servo myServo;
+
+const int potPin = A0; // pin connected to potentiometer
+const int servoPin = 9;
+
+void setup() {
+
+ myServo.attach(servoPin); // servo motor connected to pin 9
+ Serial.begin(9600); // start serial communication
+
+}
+
+void loop() {
+ 
+int value = analogRead(potPin); // potentiometer connected to pin 0A
+float voltage = (value/1023.0) * 5.0; // convert the reading to voltage
+ Serial.print(value); // displays the value
+ Serial.println(voltage); // displays the voltage 
+
+int position = map (value, 0, 1023, 0, 180); // the min and max values given by the potentiometer at angle 0 to 180
+ myServo.write(position); //moves the servo motor to new position
+
+ delay(150); // delay between position changes for stability 
+}
